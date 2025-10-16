@@ -1,0 +1,305 @@
+/* === Reset et base === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* === Header === */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.logo {
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+.logo img {
+  height: 40px;
+  max-width: 80%;
+  object-fit: contain;
+}
+
+/* === Navigation === */
+nav {
+  flex: 1 1 auto;
+  overflow-x: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 3px;
+  padding: 0;
+  margin: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  justify-content: flex-end;
+}
+
+nav ul::-webkit-scrollbar {
+  display: none;
+}
+
+nav ul li {
+  white-space: nowrap;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  padding: 6px 8px;
+  font-size: 12px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+/* === Hero section === */
+.hero {
+  position: relative;
+  /* Ancien: height: 80vh; */
+  min-height: 70vh; /* Ajusté pour laisser plus de flexibilité */
+  /* Ancien: background-size: cover; background-position: center; */
+  background-size: contain; /* L'image s'adapte entièrement sans être coupée */
+  background-position: center bottom; /* Centre l'image horizontalement et la place en bas */
+  background-repeat: no-repeat; /* Empêche la répétition de l'image */
+  
+  display: flex;
+  flex-direction: column; /* Aligne les éléments de l'overlay en colonne */
+  align-items: center;
+  justify-content: flex-end; /* Aligne le contenu vers le bas de la section */
+  padding: 20px;
+  text-align: center; /* Assure que le texte est centré */
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 40px 25px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px; /* Ajout d'une marge en bas pour ne pas coller à l'image */
+}
+
+.highlight {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.slogan {
+  margin-top: 15px;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 30px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 123, 255, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 7px 15px rgba(0, 86, 179, 0.6);
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 18px 12px;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  color: #666;
+}
+
+/* === Responsive (smartphones portrait ≤ 480px) === */
+@media (max-width: 480px) {
+  header {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 6px 8px;
+  }
+
+  .logo {
+    margin-right: 8px;
+  }
+
+  .logo img {
+    height: 36px;
+  }
+
+  nav ul {
+    gap: 2px;
+    justify-content: flex-start;
+  }
+
+  nav ul li a {
+    padding: 4px 6px;
+    font-size: 10px; /* Correction de 10qpx à 10px */
+  }
+}
+
+/* === Section Tarifs === */
+.tarif-section {
+  padding: 40px 20px;
+  background-color: #f5f5f5;
+}
+
+.tarif-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.tarif-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.tarif-card:hover {
+  transform: translateY(-5px);
+}
+
+.tarif-card h3 {
+  margin-top: 0;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.tarif-card ul {
+  padding-left: 18px;
+  margin: 10px 0;
+}
+
+.tarif-card li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* === Section Formulaire === */
+.form-section {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.form-section > .overlay {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-overlay {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* === Bouton pour smartphone === */
+.btn-contact-smartphone {
+  display: none;
+  text-align: center;
+  margin-top: 1em;
+}
+
+@media (max-width: 600px) {
+  .btn-contact-smartphone {
+    display: block !important;
+  }
+
+  .btn-contact-smartphone a {
+    display: inline-block;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    padding: 0.6em 1.2em;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+
+  .btn-contact-smartphone a:hover {
+    background-color: #0056b3;
+  }
+}
+
+/* Responsive pour tarifs sur petits écrans */
+@media (max-width: 480px) {
+  .tarif-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .tarif-card {
+    padding: 15px 12px;
+  }
+
+  .tarif-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .tarif-card li {
+    font-size: 0.9rem;
+  }
+}
+
+/* Media query spécifique pour tablettes en mode paysage */
+@media (min-width: 768px) and (orientation: landscape) {
+  .hero {
+    /* Calcul de la hauteur pour que l'image prenne tout l'espace sous le header */
+    /* La hauteur du header est d'environ 50px (padding 5px+5px + logo 40px) */
+    min-height: calc(100vh - 50px); 
+    background-size: contain; /* Assure que l'image est entièrement visible */
+    background-position: center bottom; /* Positionne l'image en bas */
+  }
+
+  /* Ajustements pour la navigation sur tablette paysage si nécessaire */
+  nav ul li a {
+    font-size: 14px; /* Un peu plus grand pour la lisibilité sur tablette */
+    padding: 8px 12px;
+  }
+}
+
+/* Media query pour les smartphones en mode portrait si besoin d'ajustements spécifiques */
+@media (max-width: 480px) and (orientation: portrait) {
+  header nav ul li a {
+    font-size: 10px; /* Taille de police spécifiée pour les liens de navigation */
+  }
+}
