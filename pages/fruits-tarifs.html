@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fruits déshydratés – Catalogue & Tarifs (groupés)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f9fb; --card:#ffffff; --ink:#1f2d2e; --muted:#6b7a7c; --accent:#0e7c86;
+    --ok:#2bb673; --ring:#e7eef3; --chip:#eef7f8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial;}
+  .wrap{max-width:1100px;margin:auto;padding:24px}
+  header{display:grid;gap:8px;margin-bottom:16px}
+  header h1{font-weight:800;letter-spacing:.3px;margin:0}
+  header p{margin:0;color:var(--muted)}
+  .notice{background:var(--chip);border:1px dashed var(--accent);padding:12px 14px;border-radius:14px;color:var(--accent);font-weight:600}
+  /* OFFRES */
+  .offers{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:18px;margin:20px 0;box-shadow:0 8px 24px rgba(17,24,39,.06)}
+  .offers h2{margin:0 0 6px 0}
+  .offers ul{margin:10px 0 0 0;padding-left:1.2rem}
+  .offers li{margin:6px 0}
+
+  /* GALERIE */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media (max-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:768px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.grid{grid-template-columns:1fr}}
+
+  .card{background:var(--card);border:1px solid var(--ring);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 26px rgba(17,24,39,.06)}
+  .thumb{aspect-ratio:1/1;background:#fff;display:grid;place-items:center;border-bottom:1px solid var(--ring)}
+  .thumb img{max-width:88%;max-height:88%;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.08))}
+  .body{padding:14px}
+  .title{font-weight:700;font-size:1.05rem;margin:0 0 6px}
+  .meta{font-size:.9rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:var(--chip);padding:4px 8px;border-radius:999px;font-weight:600;color:var(--accent)}
+  .price{margin-top:10px;font-weight:800}
+  .unit{font-weight:600;color:var(--muted);font-size:.9rem}
+
+  /* TABLE TARIFS GROUPÉS */
+  .table-wrap{background:var(--card);border:1px solid var(--ring);border-radius:18px;margin:26px 0;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  thead th{background:#f1f6f9;text-align:left;font-weight:800;padding:12px;border-bottom:1px solid var(--ring)}
+  tbody td{padding:12px;border-bottom:1px solid var(--ring);vertical-align:top}
+  .tag{display:inline-block;margin:2px 6px 2px 0;padding:6px 10px;border-radius:999px;background:#eff3f6;border:1px solid #e2e8ee;font-weight:600}
+  .format{font-size:.85rem;color:var(--muted);margin-left:6px}
+  tfoot td{padding:12px;font-size:.9rem;color:var(--muted)}
+  .legend{margin-top:6px;color:var(--muted);font-size:.9rem}
+  .ok{color:var(--ok);font-weight:800}
+  footer{margin:26px 0 6px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Fruits déshydratés – Vue cataloguée & Tarifs groupés</h1>
+      <p>Panachage possible, livraison 48–72h, sans colorant artificiel, sans sucre ajouté.</p>
+      <div class="notice">⚙️ Tout le contenu tarifaire est centralisé dans le tableau JS « FRUITS ». Modifie-le si nécessaire, tout se met à jour automatique.</div>
+    </header>
+
+    <section class="offers">
+      <h2>Offres de volume</h2>
+      <ul>
+        <li>10 sachets achetés = <span class="ok">1 sachet OFFERT</span> !</li>
+        <li>15 sachets achetés = <span class="ok">2 sachets OFFERTS</span> !</li>
+        <li>20 sachets achetés = <span class="ok">3 sachets OFFERTS</span> !</li>
+        <li>30 sachets achetés = <span class="ok">6 sachets OFFERTS</span> !</li>
+        <li>50 sachets achetés = <span class="ok">12 sachets OFFERTS</span> !</li>
+      </ul>
+      <p class="legend">Panachage possible.</p>
+    </section>
+
+    <h2>Galerie – Fruits séparés</h2>
+    <div id="gallery" class="grid" aria-live="polite"></div>
+
+    <h2 style="margin-top:28px">Tableau des tarifs (groupés par prix identique)</h2>
+    <div class="table-wrap">
+      <table id="tarifs">
+        <thead>
+          <tr>
+            <th>Tarif HT</th>
+            <th>Fruits concernés</th>
+            <th>Format</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr><td colspan="3">Les tarifs sont affichés HT par unité (sachet ou pot). Fraise uniquement en <strong>pot 150 g</strong>.</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <footer>© Papo Rénov – fiche autonome. Dernière màj : <span id="dt"></span>.</footer>
+  </div>
+
+<script>
+/* ===========
+   DONNÉES CENTRALISÉES
+   (modifie ici si besoin de corriger un prix/poids)
+   =========== */
+const FRUITS = [
+  // name, format, weight_g, price_ht, img
+  {name:"Pomme",           format:"sachet", weight:250, price:19.70, img:"/img/fruits/pomme.jpg"},
+  {name:"Poire",           format:"sachet", weight:250, price:24.50, img:"/img/fruits/poire.jpg"},
+  {name:"Fraise",          format:"pot",    weight:150, price:24.10, img:"/img/fruits/fraise.jpg"}, // pot 150 g
+  {name:"Kiwi",            format:"sachet", weight:250, price:25.40, img:"/img/fruits/kiwi.jpg"},
+  {name:"Citron vert",     format:"sachet", weight:250, price:21.90, img:"/img/fruits/citron-vert.jpg"},
+  {name:"Citron jaune",    format:"sachet", weight:250, price:21.20, img:"/img/fruits/citron-jaune.jpg"},
+  {name:"Ananas",          format:"sachet", weight:250, price:24.90, img:"/img/fruits/ananas.jpg"},
+  {name:"Banane",          format:"sachet", weight:250, price:23.90, img:"/img/fruits/banane.jpg"},
+  {name:"Orange",          format:"sachet", weight:250, price:24.40, img:"/img/fruits/orange.jpg"},
+  {name:"Orange sanguine", format:"sachet", weight:250, price:21.50, img:"/img/fruits/orange-sanguine.jpg"},
+  {name:"Mandarine",       format:"sachet", weight:250, price:24.40, img:"/img/fruits/mandarine.jpg"},
+  {name:"Pamplemousse",    format:"sachet", weight:250, price:23.90, img:"/img/fruits/pamplemousse.jpg"},
+];
+
+/* ===========
+   RENDU GALERIE
+   =========== */
+const € = n => n.toLocaleString('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2});
+const gallery = document.getElementById('gallery');
+FRUITS.forEach(f=>{
+  const li = document.createElement('article');
+  li.className="card";
+  li.innerHTML = `
+    <div class="thumb">
+      <img src="${f.img}" alt="${f.name}">
+    </div>
+    <div class="body">
+      <h3 class="title">${f.name}</h3>
+      <div class="meta">
+        <span class="chip">${f.weight} g</span>
+        <span class="unit">${f.format === 'pot' ? 'Pot' : 'Sachet'}</span>
+      </div>
+      <div class="price">${€(f.price)} HT <span class="unit">/ ${f.format}</span></div>
+    </div>
+  `;
+  gallery.appendChild(li);
+});
+
+/* ===========
+   TABLE TARIFS GROUPÉS
+   =========== */
+const groups = {};
+FRUITS.forEach(f=>{
+  const key = `${f.price.toFixed(2)}|${f.format}`; // on groupe par prix + format
+  if(!groups[key]) groups[key] = {price:f.price, format:f.format, items:[]};
+  groups[key].items.push(f.name);
+});
+
+// tri par prix croissant
+const sorted = Object.values(groups).sort((a,b)=>a.price-b.price || a.format.localeCompare(b.format));
+
+const tbody = document.querySelector('#tarifs tbody');
+sorted.forEach(g=>{
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><strong>${€(g.price)} HT</strong></td>
+    <td>${g.items.map(n=>`<span class="tag">${n}</span>`).join(' ')}</td>
+    <td>${g.format === 'pot' ? 'Pot (150 g – Fraise)' : 'Sachet (≈250 g)'}</td>
+  `;
+  tbody.appendChild(tr);
+});
+
+document.getElementById('dt').textContent = new Date().toLocaleDateString('fr-FR');
+</script>
+</body>
+</html>
